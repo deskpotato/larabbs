@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'PagesController@root')->name('index');
+
+Auth::routes();

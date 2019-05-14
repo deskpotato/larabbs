@@ -14,3 +14,5 @@
 Route::get('/', 'PagesController@root')->name('index');
 
 Auth::routes(['verify'=>true]);
+
+Route::resource('users','UsersController',['only'=>['show','edit','update']]);

@@ -17,7 +17,7 @@
         </a>
     </div>
     <small class="media-body meta text-secondary">
-        <a class="text-secondary" href="#" title="{{ $topic->category->name }}">
+        <a class="text-secondary" href="{{ route('categories.show',$topic->category_id) }}" title="{{ $topic->category->name }}">
             <i class="far fa-folder"></i>
             {{ $topic->category->name }}
         </a>
@@ -32,7 +32,7 @@
     </small>
     </div>
     </li>
-    @if ( ! $loop->last)
+    @if (!$loop->last)
         <hr>
     @endif
     @endforeach

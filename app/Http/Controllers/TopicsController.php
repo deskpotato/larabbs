@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Handlers\ImageUploadHandler;
 use App\Models\User;
+use App\Models\Link;
 
 class TopicsController extends Controller
 {
@@ -18,12 +19,15 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index(Request $request,User $user)
+	public function index(Request $request,User $user,Link $link)
 	{
 		$topics = Topic::withOrder($request->order)->paginate(20);
 		//缓存获取活跃用户
 		$active_users =  $user->getActiveUsers();
-		return view('topics.index', compact('topics','active_users'));
+
+		$links = $link->getAllCached();
+
+		return view('topics.index', compact('topics','active_users','links'));
 	}
 
     public function show(Request $request,Topic $topic)

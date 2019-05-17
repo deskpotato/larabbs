@@ -14,7 +14,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     
     use HasRoles;
-    
+
     use Notifiable {
         notify as protected laravelNotify;
     }
@@ -86,5 +86,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAuthorOf($model)
     {
         return $this->id == $model->user_id;
+    }
+
+    //修改器
+    public function setPasswordAttribute($value)
+    {
+        if(strlen($value) !=60){
+            $value = bcrypt($value);
+        }
+        $this->attributes['password'] = $value;
+    }
+
+    public function setAvatarAttribute($path)
+    {
+        if(!starts_with($path,'http')){
+            
+            $path = config('app.url')."/uploads/images/avatar/$path";
+        }
+
+        $this->attributes['avatar'] = $path;
     }
 }

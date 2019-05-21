@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements JWTSubject
 {
 
     use Traits\ActiveUserHelper;
@@ -22,6 +23,16 @@ class User extends Authenticatable implements MustVerifyEmail
         notify as protected laravelNotify;
     }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+
+    public function getJWTCustomClaims()
+    {
+         return [];
+    }
 
     //发送通知消息
 
